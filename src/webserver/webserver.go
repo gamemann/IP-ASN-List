@@ -17,6 +17,8 @@ func (info *Info) handler(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("Authorization") != info.token {
 		fmt.Fprintf(w, "Not authorized.")
 
+		w.WriteHeader(http.StatusUnauthorized)
+
 		return
 	}
 
@@ -28,6 +30,8 @@ func (info *Info) handler(w http.ResponseWriter, r *http.Request) {
 	// Check for errors.
 	if err != nil {
 		fmt.Fprintf(w, "File not found.")
+
+		w.WriteHeader(http.StatusNotFound)
 
 		return
 	}
@@ -44,6 +48,8 @@ func (info *Info) handler(w http.ResponseWriter, r *http.Request) {
 	// Check for errors.
 	if err != nil {
 		fmt.Fprintf(w, "Error reading file.")
+
+		w.WriteHeader(http.StatusBadRequest)
 
 		return
 	}
