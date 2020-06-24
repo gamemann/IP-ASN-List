@@ -15,9 +15,9 @@ type Info struct {
 func (info *Info) handler(w http.ResponseWriter, r *http.Request) {
 	// Check authorization token and header.
 	if r.Header.Get("Authorization") != info.token {
-		fmt.Fprintf(w, "Not authorized.")
-
 		w.WriteHeader(http.StatusUnauthorized)
+
+		fmt.Fprintf(w, "Not authorized.")
 
 		return
 	}
@@ -29,9 +29,9 @@ func (info *Info) handler(w http.ResponseWriter, r *http.Request) {
 
 	// Check for errors.
 	if err != nil {
-		fmt.Fprintf(w, "File not found.")
-
 		w.WriteHeader(http.StatusNotFound)
+
+		fmt.Fprintf(w, "File not found.")
 
 		return
 	}
@@ -47,9 +47,9 @@ func (info *Info) handler(w http.ResponseWriter, r *http.Request) {
 
 	// Check for errors.
 	if err != nil {
-		fmt.Fprintf(w, "Error reading file.")
-
 		w.WriteHeader(http.StatusBadRequest)
+
+		fmt.Fprintf(w, "Error reading file.")
 
 		return
 	}
