@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"time"
 )
 
 type Info struct {
@@ -61,11 +62,16 @@ func CreateWebServer(token string, port int) bool {
 	// Create info struct and assign lists argument to lists member.
 	info := &Info{token: token}
 
-	// Create handler.
-	http.HandleFunc("/", info.handler)
+	// Create HTTP server.
+	srv := &http.Server{
+		Addr:         ":" + strconv.Itoa(port),
+		Handler:      http.HandlerFunc(info.handler),
+		ReadTimeout:  time.Second * 30,
+		WriteTimeout: time.Second * 30,
+	}
 
 	// Create web server and have it listen on specific port.
-	err := http.ListenAndServe(":"+strconv.Itoa(port), nil)
+	err := srv.ListenAndServe()
 
 	// Check for errors.
 	if err != nil {
