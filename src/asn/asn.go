@@ -31,7 +31,14 @@ func ListPrefixes(ASN int) []string {
 
 	// Setup HTTP GET request.
 	client := &http.Client{Timeout: time.Second * 5}
-	req, _ := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", url, nil)
+
+	// Check for error with new request.
+	if err != nil {
+		fmt.Println(err)
+
+		return list
+	}
 
 	// Perform GET request.
 	resp, err := client.Do(req)
@@ -39,6 +46,8 @@ func ListPrefixes(ASN int) []string {
 	// Check for errors.
 	if err != nil {
 		fmt.Println(err)
+
+		return list
 	}
 
 	// Ensure to close body at end of execution.
@@ -50,6 +59,8 @@ func ListPrefixes(ASN int) []string {
 	// Check for errors.
 	if err != nil {
 		fmt.Println(err)
+
+		return list
 	}
 
 	// Create JSON response.
@@ -60,6 +71,8 @@ func ListPrefixes(ASN int) []string {
 
 	if err != nil {
 		fmt.Println(err)
+
+		return list
 	}
 
 	// Loop through each prefix and add to list.

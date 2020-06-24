@@ -136,6 +136,8 @@ func GetLists() Lists {
 	// Check for errors.
 	if err != nil {
 		fmt.Println(err)
+
+		return lists
 	}
 
 	for _, f := range files {
