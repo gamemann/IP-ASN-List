@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"os"
 	"path/filepath"
 	"strings"
@@ -51,7 +52,12 @@ func UpdateList(list *List) bool {
 	w := bufio.NewWriter(file)
 
 	for _, v := range list.Prefixes {
-		_, _ = w.WriteString(v + "\n")
+		// Parse CIDR and ensure it's valid before putting into file.
+		_, _, err := net.ParseCIDR(v)
+
+		if err == nil {
+			_, _ = w.WriteString(v + "\n")
+		}
 	}
 
 	// Flush buffer.
