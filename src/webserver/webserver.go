@@ -24,7 +24,7 @@ func (info *Info) handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Check prefix API path.
+	// Check API path.
 	if r.URL.Path == "/prefix" {
 		api.Handler(w, r, 1)
 
