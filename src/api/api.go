@@ -16,7 +16,7 @@ type JSONList struct {
 	Prefixes []string `json:"Prefix"`
 }
 
-func Handler(w http.ResponseWriter, r *http.Request, api string) {
+func Handler(w http.ResponseWriter, r *http.Request, api int) {
 	// Retrieve list value.
 	list := filepath.Base(r.PostFormValue("list"))
 
@@ -24,7 +24,7 @@ func Handler(w http.ResponseWriter, r *http.Request, api string) {
 	var prefix string
 	var asn int
 
-	if api == "prefix" {
+	if api == 1 {
 		prefix = r.PostFormValue("prefix")
 
 		// Check prefix.
@@ -103,7 +103,7 @@ func Handler(w http.ResponseWriter, r *http.Request, api string) {
 	}
 
 	// Check what API type (prefix or ASN).
-	if api == "prefix" {
+	if api == 1 {
 		// Check whether we're adding or removing prefix.
 		if r.Method == "PUT" && !prefixExist(jsonobj, prefix) {
 			// Append prefix to JSON object.
@@ -112,7 +112,7 @@ func Handler(w http.ResponseWriter, r *http.Request, api string) {
 			// Remove prefix from JSON object.
 			jsonobj = remPrefix(jsonobj, prefix)
 		}
-	} else if api == "asn" {
+	} else if api == 2 {
 		// Check whether we're adding or removing prefix.
 		if r.Method == "PUT" && !asnExist(jsonobj, asn) {
 			// Append prefix to JSON object.

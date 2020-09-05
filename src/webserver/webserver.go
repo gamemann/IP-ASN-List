@@ -26,11 +26,11 @@ func (info *Info) handler(w http.ResponseWriter, r *http.Request) {
 
 	// Check prefix API path.
 	if r.URL.Path == "/prefix" {
-		api.Handler(w, r, "prefix")
+		api.Handler(w, r, 1)
 
 		return
 	} else if r.URL.Path == "/asn" {
-		api.Handler(w, r, "asn")
+		api.Handler(w, r, 2)
 
 		return
 	}
