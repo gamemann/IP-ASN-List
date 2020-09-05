@@ -1,6 +1,7 @@
 package webserver
 
 import (
+	"../api"
 	"fmt"
 	"net/http"
 	"os"
@@ -19,6 +20,17 @@ func (info *Info) handler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 
 		fmt.Fprintf(w, "Not authorized.")
+
+		return
+	}
+
+	// Check prefix API path.
+	if r.URL.Path == "/prefix" {
+		api.Handler(w, r, "prefix")
+
+		return
+	} else if r.URL.Path == "/asn" {
+		api.Handler(w, r, "asn")
 
 		return
 	}
