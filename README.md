@@ -34,6 +34,15 @@ Each list config needs to have a file with the format `lists/<name>.json`. Here'
 
 The above configuration will output all prefixes from ASN's 398129 and 32590 along with the additional prefixes `192.168.90.1/32` and `192.168.90.2/32` to `public/test.txt`.
 
+## REST API
+This application supports a simple REST API for adding/removing prefixes/ASNs from specific lists.
+
+For adding/removing a prefix, use the route `/prefix` (e.g. `https://api.example.com/prefix`). If you're adding a prefix, use the method type `PUT`. Otherwise, use the method type `DELETE`. Form values include `list` which is the list name without the file extension (e.g. `test` mapping to `lists/test.json`) and `prefix` which is a string containing the prefix you'd like to add/remove (e.g. `192.168.90.1/32`).
+
+For adding/removing an ASN, use the route `/asn` (e.g. `https://api.example.com/asn`). If you're adding an ASN, use the method type `PUT`. Otherwise, use the method type `DELETE`. Form values include `list` which is the list name without the file extension (e.g. `test` mapping to `lists/test.json`) and `asn` which is an integer of the ASN you'd like to add/remove (e.g. `398129`).
+
+**Note** - In order to use this API, the request must send an authorization header with a value equal to the `token` value in the `settings.conf` file. In the future, I may look into implementing a separate authorization key for using the REST API so you can separate read/write operations within the application. However, this suits my network's needs for now.
+
 ## Building
 You may use the following commands to build this project.
 
