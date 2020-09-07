@@ -113,9 +113,9 @@ func Handler(w http.ResponseWriter, r *http.Request, api int) {
 			jsonobj = remPrefix(jsonobj, prefix)
 		}
 	} else if api == 2 {
-		// Check whether we're adding or removing prefix.
+		// Check whether we're adding or removing ASN.
 		if r.Method == "PUT" && !asnExist(jsonobj, asn) {
-			// Append prefix to JSON object.
+			// Append ASN to JSON object.
 			jsonobj.ASNs = append(jsonobj.ASNs, asn)
 		} else if r.Method == "DELETE" {
 			// Remove ASN from JSON object.
