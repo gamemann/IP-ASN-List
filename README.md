@@ -3,7 +3,7 @@
 A Go program that acts as a web server. This program loops through all `.json` files in the `lists/` directory and parses each list. Each list can contain an array of prefixes and ASNs. There are lookups performed on the ASNs via [BGPView](https://bgpview.docs.apiary.io/#reference/0/asn-prefixes/view-asn-prefixes)'s API. Afterwards, it outputs all prefixes to a file in the `public/` directory where clients can view them assuming they have the correct authorization header set from the config.
 
 ## Why Did I Make This?
-After implementing my own custom filters into [Compressor V1](https://github.com/Dreae/compressor/) to mitigate (D)DoS attacks against GFL's Anycast network, I decided to implement whitelisting functionality for specific services. However, I didn't want to update these files locally on each POP each time I had to add a prefix. Therefore, I decided to create this program and have each POP cURL each list for specific services (with the correct authorization header set) and save them locally every five - ten minutes.
+After implementing my own custom filters into [Compressor V1](https://github.com/Dreae/compressor/) to mitigate (D)DoS attacks against GFL's Anycast network, I decided to implement whitelisting functionality for specific services. However, I didn't want to update these files locally on each POP every time I had to add a prefix. Therefore, I decided to create this program and have each POP cURL each list for specific services (with the correct authorization header set) and save them locally every five - ten minutes.
 
 ## Config
 You can change settings in the `settings.conf` file which is in JSON format. Here's the default config:
