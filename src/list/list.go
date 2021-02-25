@@ -192,7 +192,7 @@ func GetLists(cfg *config.Config) Lists {
 		list.Prefixes = append(list.Prefixes, prefixes...)
 
 		// Add list to lists variable.
-		if pass {
+		if cfg.IgnoreFailure && pass {
 			lists.Lists = append(lists.Lists, list)
 		} else {
 			if cfg.Debug {
