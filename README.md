@@ -9,12 +9,16 @@ After implementing my own custom filters into [Compressor V1](https://github.com
 You can change settings in the `settings.conf` file which is in JSON format. Here's the default config:
 
 ```
-{"token": "CHANGEME", "port": 7030, "updatetime": 15}
+{"token": "CHANGEME", "port": 7030, "updatetime": 10, "maxitems": 10, "ignorefailure": false, "debug": false, "random": true}
 ```
 
 * `token` => The authorization header that must be set when accessing the list publicly.
 * `port` => The port the web server binds to.
 * `updatetime` => How often to update all lists.
+* `maxitems` => The maximum amount of lists to update at once.
+* `ignorefailure` => If false, if an ASN lookup fails on a specific list, the list will not be written to. This is useful if you're facing rate limiting with BGPView.
+* `debug` => Whether to enable debugging.
+* `random` => If true, when scanning the `lists/` directory, will randomize the order of the lists to update.
 
 ## Lists
 Each list config needs to have a file with the format `lists/<name>.json`. Here's an example of the test list (`lists/test.json`):
