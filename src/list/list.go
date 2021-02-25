@@ -164,6 +164,10 @@ func GetLists(cfg *config.Config) Lists {
 		var pass bool = true
 
 		if cfg.MaxItems < i {
+			if cfg.Debug {
+				fmt.Println("Skipping list due to item count (", i, ") > max item count (", cfg.MaxItems, ")")
+			}
+
 			break
 		}
 
@@ -188,6 +192,10 @@ func GetLists(cfg *config.Config) Lists {
 		// Add list to lists variable.
 		if pass {
 			lists.Lists = append(lists.Lists, list)
+		} else {
+			if cfg.Debug {
+				fmt.Println("Skipping list \"", name, "\" due to ASN failure.")
+			}
 		}
 
 		i++

@@ -12,6 +12,7 @@ type Config struct {
 	UpdateTime    int    `json:"updatetime"`
 	MaxItems      int    `json:"maxitems"`
 	IgnoreFailure bool   `json:"ignorefailure"`
+	Debug         bool   `json:"debug"`
 }
 
 func ReadConfig(cfg *Config, filename string) bool {
