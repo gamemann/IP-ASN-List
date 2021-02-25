@@ -2,14 +2,17 @@ package list
 
 import (
 	"../asn"
+	"../config"
 	"bufio"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"net"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 type JSONList struct {
@@ -132,7 +135,7 @@ func ExtractList(json JSONList) []string {
 	return prefixes
 }
 
-func GetLists() Lists {
+func GetLists(cfg *config.Config) Lists {
 	// Initialize empty lists slice.
 	var lists Lists
 
@@ -146,10 +149,21 @@ func GetLists() Lists {
 		return lists
 	}
 
+	// Randomize the list.
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(files), func(i, j int) { files[i], files[j] = files[j], files[i] })
+
+	var i int = 0
+
 	for _, f := range files {
 		// Check if this is a directory.
 		if f.IsDir() {
 			continue
+		}
+
+		if cfg.MaxItems < i {
+			fmt.Println("Skipping because ", cfg.MaxItems, " > ", i)
+			break
 		}
 
 		// Get file name without extension.
@@ -172,6 +186,8 @@ func GetLists() Lists {
 
 		// Add list to lists variable.
 		lists.Lists = append(lists.Lists, list)
+
+		i++
 	}
 
 	return lists

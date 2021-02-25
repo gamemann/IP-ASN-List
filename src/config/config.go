@@ -10,6 +10,7 @@ type Config struct {
 	Token      string `json:"token"`
 	Port       int    `json:"port"`
 	UpdateTime int    `json:"updatetime"`
+	MaxItems   int    `json:"maxitems"`
 }
 
 func ReadConfig(cfg *Config, filename string) bool {
