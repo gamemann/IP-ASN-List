@@ -149,9 +149,11 @@ func GetLists(cfg *config.Config) Lists {
 		return lists
 	}
 
-	// Randomize the list.
-	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(files), func(i, j int) { files[i], files[j] = files[j], files[i] })
+	// Randomize the list if enabled.
+	if cfg.Random {
+		rand.Seed(time.Now().UnixNano())
+		rand.Shuffle(len(files), func(i, j int) { files[i], files[j] = files[j], files[i] })
+	}
 
 	var i int = 0
 
