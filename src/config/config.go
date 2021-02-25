@@ -7,10 +7,11 @@ import (
 )
 
 type Config struct {
-	Token      string `json:"token"`
-	Port       int    `json:"port"`
-	UpdateTime int    `json:"updatetime"`
-	MaxItems   int    `json:"maxitems"`
+	Token         string `json:"token"`
+	Port          int    `json:"port"`
+	UpdateTime    int    `json:"updatetime"`
+	MaxItems      int    `json:"maxitems"`
+	IgnoreFailure bool   `json:"ignorefailure"`
 }
 
 func ReadConfig(cfg *Config, filename string) bool {

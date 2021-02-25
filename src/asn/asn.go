@@ -22,7 +22,7 @@ type Response struct {
 	Data   Data   `json:"data"`
 }
 
-func ListPrefixes(ASN int) []string {
+func ListPrefixes(ASN int, pass *bool) []string {
 	// Initialize empty list.
 	var list []string
 
@@ -36,6 +36,7 @@ func ListPrefixes(ASN int) []string {
 	// Check for error with new request.
 	if err != nil {
 		fmt.Println(err)
+		*pass = false
 
 		return list
 	}
@@ -46,6 +47,7 @@ func ListPrefixes(ASN int) []string {
 	// Check for errors.
 	if err != nil {
 		fmt.Println(err)
+		*pass = false
 
 		return list
 	}
@@ -59,6 +61,7 @@ func ListPrefixes(ASN int) []string {
 	// Check for errors.
 	if err != nil {
 		fmt.Println(err)
+		*pass = false
 
 		return list
 	}
@@ -71,6 +74,7 @@ func ListPrefixes(ASN int) []string {
 
 	if err != nil {
 		fmt.Println(err)
+		*pass = false
 
 		return list
 	}

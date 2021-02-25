@@ -118,13 +118,13 @@ func ParseList(name string) JSONList {
 	return list
 }
 
-func ExtractList(json JSONList) []string {
+func ExtractList(json JSONList, pass *bool) []string {
 	// Create empty prefixes list.
 	var prefixes []string
 
 	// Loop through each AS and do appropriate lookups. After lookups, append to list.
 	for _, v := range json.ASNs {
-		prefixes = append(prefixes, asn.ListPrefixes(v)...)
+		prefixes = append(prefixes, asn.ListPrefixes(v, pass)...)
 	}
 
 	// Loop through each additional prefix and add.
@@ -161,8 +161,9 @@ func GetLists(cfg *config.Config) Lists {
 			continue
 		}
 
+		var pass bool = true
+
 		if cfg.MaxItems < i {
-			fmt.Println("Skipping because ", cfg.MaxItems, " > ", i)
 			break
 		}
 
@@ -173,7 +174,7 @@ func GetLists(cfg *config.Config) Lists {
 		jsonlists := ParseList(name)
 
 		// Extract all IPs including ASN prefixes.
-		prefixes := ExtractList(jsonlists)
+		prefixes := ExtractList(jsonlists, &pass)
 
 		// Create list.
 		var list List
@@ -185,7 +186,9 @@ func GetLists(cfg *config.Config) Lists {
 		list.Prefixes = append(list.Prefixes, prefixes...)
 
 		// Add list to lists variable.
-		lists.Lists = append(lists.Lists, list)
+		if pass {
+			lists.Lists = append(lists.Lists, list)
+		}
 
 		i++
 	}
