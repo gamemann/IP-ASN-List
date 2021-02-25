@@ -192,9 +192,9 @@ func GetLists(cfg *config.Config) Lists {
 		list.Prefixes = append(list.Prefixes, prefixes...)
 
 		// Add list to lists variable.
-		if cfg.IgnoreFailure && pass {
+		if pass {
 			lists.Lists = append(lists.Lists, list)
-		} else {
+		} else if !cfg.IgnoreFailure {
 			if cfg.Debug {
 				fmt.Println("Skipping list \"", name, "\" due to ASN failure.")
 			}
