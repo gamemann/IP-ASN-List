@@ -11,14 +11,14 @@ import (
 	"time"
 )
 
-func UpdateEverything(lists *list.Lists, timer *time.Ticker) {
+func UpdateEverything(lists *list.Lists, timer *time.Ticker, cfg *config.Config) {
 	destroy := make(chan struct{})
 
 	for {
 		select {
 		case <-timer.C:
 			// First retreive new lists
-			*lists = list.GetLists()
+			*lists = list.GetLists(cfg)
 
 			// Update the public files.
 			list.UpdateLists(lists)
@@ -41,14 +41,14 @@ func main() {
 	var lists list.Lists
 
 	// Get all initial lists.
-	lists = list.GetLists()
+	lists = list.GetLists(&cfg)
 
 	// Update the public files.
 	list.UpdateLists(&lists)
 
 	// Create timer that'll update the lists every x seconds.
 	ticker := time.NewTicker(time.Duration(cfg.UpdateTime) * time.Second)
-	go UpdateEverything(&lists, ticker)
+	go UpdateEverything(&lists, ticker, &cfg)
 
 	// Create web server.
 	log.Fatal(webserver.CreateWebServer(cfg.Token, cfg.Port))
