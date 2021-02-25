@@ -27,7 +27,7 @@ func ListPrefixes(ASN int) []string {
 	var list []string
 
 	// Build URL.
-	url := "https://api.bgpview.io/asn/AS" + strconv.Itoa(ASN) + "/prefixes"
+	url := "https://api.bgpview.io/asn/" + strconv.Itoa(ASN) + "/prefixes"
 
 	// Setup HTTP GET request.
 	client := &http.Client{Timeout: time.Second * 5}
